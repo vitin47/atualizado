@@ -1,4 +1,4 @@
-
+<?php if(!class_exists('Rain\Tpl')){exit;}?>
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">                
             <div class="col-md-3">
-                {include="profile-menu"}
+                <?php require $this->checkTemplate("profile-menu");?>
             </div>
             <div class="col-md-9">
                 
@@ -35,21 +35,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {loop="$orders"}
+                        <?php $counter1=-1;  if( isset($orders) && ( is_array($orders) || $orders instanceof Traversable ) && sizeof($orders) ) foreach( $orders as $key1 => $value1 ){ $counter1++; ?>
                         <tr>
-                            <th scope="row">{$value.idorder}</th>
-                            <td>R${function="formatPrice($value.vltotal)"}</td>
-                            <td>{$value.desstatus}</td>
-                            <td>{$value.desaddress}, {$value.desdistrict}, {$value.descity} - , {$value.desstate} CEP: {$value.deszipcode}</td>
+                            <th scope="row"><?php echo htmlspecialchars( $value1["idorder"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
+                            <td>R$<?php echo formatPrice($value1["vltotal"]); ?></td>
+                            <td><?php echo htmlspecialchars( $value1["desstatus"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                            <td><?php echo htmlspecialchars( $value1["desaddress"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["desdistrict"], ENT_COMPAT, 'UTF-8', FALSE ); ?>, <?php echo htmlspecialchars( $value1["descity"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - , <?php echo htmlspecialchars( $value1["desstate"], ENT_COMPAT, 'UTF-8', FALSE ); ?> CEP: <?php echo htmlspecialchars( $value1["deszipcode"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                             <td style="width:222px;">
-                                <a class="btn btn-default" href="/profile/orders/{$value.idorder}" role="button">Detalhes</a>
+                                <a class="btn btn-default" href="/profile/orders/<?php echo htmlspecialchars( $value1["idorder"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" role="button">Detalhes</a>
                             </td>
                         </tr>
-                        {else}
+                        <?php }else{ ?>
                         <div class="alert alert-info">
                             Nenhum pedido foi encontrado.
                         </div>
-                        {/loop}
+                        <?php } ?>
                     </tbody>
                 </table>
 
